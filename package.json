@@ -3,6 +3,10 @@
   "version": "1.0.2",
   "description": "A systemic redis component",
   "main": "index.js",
+  "engineStrict": true,
+  "engines": {
+    "node": ">=0.12"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
