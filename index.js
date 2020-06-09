@@ -32,11 +32,10 @@ module.exports = (options) => {
       throw new Error('config is required');
     }
 
-    if (!dependencies.logger) {
+  ({ logger } = dependencies);
+    if (!logger) {
       logger = console;
-      logger.info = console.log;
-    } else {
-      logger = dependencies.logger;
+      // logger.info = console.log;
     }
 
     logger.info(`Connecting to ${config.url || config.host || '127.0.0.1'}`);
