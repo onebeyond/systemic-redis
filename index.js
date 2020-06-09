@@ -1,42 +1,62 @@
-var async = require('async')
-var get = require('lodash.get')
-var format = require('util').format
+module.exports = (options) => {
+  let redis = (options && options.redis) || require('redis');
+  let client;
+  let config;
+  let logger;
 
-module.exports = function(options) {
+  const connectToRedis = () =>
+    new Promise((resolve) => {
+      client.on('ready', () => {
+        logger.info(`Connection to redis reached ready state.`);
+        resolve();
+      });
+    });
 
-    var redis = options && options.redis || require('redis')
-    var client
-    var config
-    var logger
+  const closeRedisConnection = () =>
+    new Promise((resolve, reject) => {
+      if (!client) {
+        reject(new Error('Client has not been initialized.'));
+        return;
+      }
 
-    function init(dependencies, cb) {
-        config = dependencies.config
-        logger = dependencies.logger || console
-        cb()
+      logger.info(`Disconnecting from ${config.url || config.host || '127.0.0.1'}`);
+      client.quit(() => {
+        resolve();
+      });
+    });
+
+  const start = async (dependencies) => {
+    config = { ...dependencies.config };
+
+    if (!config) {
+      throw new Error('config is required');
     }
 
-    function validate(cb) {
-        if (!config) return cb(new Error('config is required'))
-        cb()
+    if (!dependencies.logger) {
+      logger = console;
+      logger.info = console.log;
+    } else {
+      logger = dependencies.logger;
     }
 
-    function start(cb) {
-        logger.info(format('Connecting to %s', config.url || config.host || '127.0.0.1'))
-        client = redis.createClient(config)
-        if (get(config, 'no_ready_check')) return cb(null, client)
-        client.on('ready', function() {
-            cb(null, client)
-        })
+    logger.info(`Connecting to ${config.url || config.host || '127.0.0.1'}`);
+    client = redis.createClient(config);
+
+    if (config.no_ready_check) {
+      connectToRedis();
+    } else {
+      await connectToRedis();
     }
 
-    function stop(cb) {
-        if (!client) return cb()
-        logger.info(format('Disconnecting from %s', config.url || config.host || '127.0.0.1'))
-        client.quit(cb)
-    }
+    return client;
+  };
 
-    return {
-        start: async.seq(init, validate, start),
-        stop: stop
-    }
-}
+  const stop = async () => {
+    await closeRedisConnection();
+  };
+
+  return {
+    start,
+    stop,
+  };
+};

@@ -13,9 +13,7 @@
   "author": "GuideSmiths Ltd",
   "license": "ISC",
   "dependencies": {
-    "async": "^2.0.0",
-    "lodash.get": "^4.3.0",
-    "redis": "^2.6.2"
+    "redis": "^3.0.2"
   },
   "devDependencies": {},
   "repository": {
