@@ -34,7 +34,7 @@ module.exports = (options) => {
 
     const { keepAlive, keepAliveTimer: keepAliveTimerParam } = config;
     if (keepAliveTimerParam && (isNaN(keepAliveTimerParam) || keepAliveTimerParam <= 0)) {
-      throw new Error(`${keepAliveTimer} is not a valid number.`);
+      throw new Error(`${keepAliveTimerParam} is not a valid number.`);
     }
     // 30 seconds by default
     const keepAliveTimer = keepAliveTimerParam ? keepAliveTimerParam * 1000 : 30000;
