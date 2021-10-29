@@ -9,6 +9,8 @@
     "npm": ">=6.0.0"
   },
   "scripts": {
+    "lint": "eslint . --ext .js",
+    "lint:fix": "npm run lint -- --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -20,7 +22,12 @@
   "dependencies": {
     "redis": "^3.1.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@commitlint/cli": "^13.2.1",
+    "@commitlint/config-conventional": "^13.2.0",
+    "eslint": "^8.1.0",
+    "husky": "^7.0.4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/guidesmiths/systemic-redis.git"
