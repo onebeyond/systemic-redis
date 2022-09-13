@@ -4,26 +4,7 @@ module.exports = (options) => {
   let config;
   let logger;
 
-  const connectToRedis = () =>
-    new Promise((resolve) => {
-      client.on('ready', () => {
-        logger.info(`Connection to redis reached ready state.`);
-        resolve();
-      });
-    });
-
-  const closeRedisConnection = () =>
-    new Promise((resolve, reject) => {
-      if (!client) {
-        reject(new Error('Client has not been initialized.'));
-        return;
-      }
-
-      logger.info(`Disconnecting from ${config.url || config.host || '127.0.0.1'}`);
-      client.quit(() => {
-        resolve();
-      });
-    });
+  const connectToRedis = () => client.connect();
 
   const start = async (dependencies) => {
     config = { ...dependencies.config };
@@ -58,16 +39,14 @@ module.exports = (options) => {
      * Redis instances in Azure disconnect the client after an IDLE time causing a forced reconnection.
      * https://gist.github.com/JonCole/925630df72be1351b21440625ff2671f#file-redis-bestpractices-node-js-md
      */
-     keepAlive && setInterval(() => {
+    keepAlive && setInterval(() => {
       client.ping();
     }, keepAliveTimer);
 
     return client;
   };
 
-  const stop = async () => {
-    await closeRedisConnection();
-  };
+  const stop = async () => client.disconnect();
 
   return {
     start,
