@@ -26,8 +26,14 @@ module.exports = (options) => {
       logger = console;
     }
 
-    logger.info(`Connecting to ${config.url || config.host || '127.0.0.1'}`);
-    client = redis.createClient(config);
+    // https://github.com/redis/node-redis#basic-example
+    const host = config.url || config.host || '127.0.0.1';
+    const protocol = config.tls ? 'rediss://' : 'redis://';
+    logger.info(`Connecting to ${host} with protocol ${protocol} based on TLS config`);
+    client = redis.createClient({
+      url: protocol + '@' + host + ':' + config.port,
+      password: config.password,
+  });
 
     if (config.no_ready_check) {
       connectToRedis();
