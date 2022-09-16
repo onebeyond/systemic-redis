@@ -1,20 +1,24 @@
 name: Node.js branch push
 on:
   push:
-    branches:    
-      - '*'         # matches every branch that doesn't contain a '/'
-      - '*/*'       # matches every branch containing a single '/'
-      - '**'        # matches every branch
-      - '!master'   # excludes master
+    branches:
+      - "*" # matches every branch that doesn't contain a '/'
+      - "*/*" # matches every branch containing a single '/'
+      - "**" # matches every branch
+      - "!master" # excludes master
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Set up Node.js version ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
         with:
-          node-version: "16.x"
-          registry-url: "https://registry.npmjs.org"
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
       - run: npm run docker:start
       - run: npm install
       - run: npm test
