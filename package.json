@@ -13,7 +13,7 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "npx jest",
     "docker:start": "docker-compose up -d",
-    "docker:down": "docker-compose down"
+    "docker:stop": "docker-compose down"
   },
   "keywords": [
     "systemic",
