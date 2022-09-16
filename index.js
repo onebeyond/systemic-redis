@@ -1,12 +1,15 @@
+const debug = require('debug')('systemic:redis');
+
 module.exports = (options) => {
   let redis = (options && options.redis) || require('redis');
   let client;
   let config;
   let logger;
 
-  const connectToRedis = () => client.connect();
+  const connectToRedis = async () => client.connect();
 
   const start = async (dependencies) => {
+    debug(dependencies);
     config = { ...dependencies.config };
 
     if (!config) {
