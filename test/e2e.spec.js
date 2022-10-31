@@ -1,4 +1,4 @@
-jest.setTimeout(10000);
+jest.setTimeout(15000);
 const systemImage = require('./system');
 const redisSystem = require('../index');
 const dockerCompose = require('docker-compose');
@@ -14,7 +14,7 @@ describe('systemic-redis', () => {
         await system.start();
         throw new Error('This line should not be executed never');
       } catch (error) {
-        expect(error.message).toBe('Unhandled error. ([ErrorReply: ERR Client sent AUTH, but no password is set])');
+        expect(error.message).toBe('ERR invalid password');
       }
     });
   });
@@ -24,7 +24,7 @@ describe('systemic-redis', () => {
 
     describe('redis instance connect', () => {
       it('defaults', async () => {
-        system.set('config', { host: 'localhost', port: 6379 });
+        system.set('config', { host: 'localhost', password: 'systemic-redis-defaults', port: 6379 });
         system.set('redis', redisSystem()).dependsOn('config');
         const { redis: instance } = await system.start();
 
@@ -45,7 +45,7 @@ describe('systemic-redis', () => {
     });
 
     it('reconnect strategy', async () => {
-      system.set('config', { host: 'localhost', port: 6379 });
+      system.set('config', { host: 'localhost', password: 'systemic-redis-defaults', port: 6379 });
       system.set('redis', redisSystem()).dependsOn('config');
       const { redis: instance } = await system.start();
 

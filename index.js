@@ -30,8 +30,8 @@ module.exports = (options) => {
       connectTimeout: 10000,
       keepAlive: 5000,
       reconnectStrategy: retries => {
-        logger.info('Reconnect attempt', retries);
-        return 3000;
+        console.log('Reconnect attempt', retries);
+        return 4000;
       }
     };
     if (config.tls) {
@@ -52,16 +52,21 @@ module.exports = (options) => {
 
     client.on('ready', () => {
       logger.info(`Connected ${url}`);
-    })
+    });
+
 
     // Without handling incoming server errors the process would get finished
-    client.on("error", error => {
+    client.on('error', error => {
+      console.log(error.message)
+      if (error.message === 'ERR invalid password') {
+        throw error;
+      }
       logger.error("client err", error);
     });
 
     client.on('reconnecting', () => {
       logger.info(`Redis client is reconnecting to ${url}...`)
-    })
+    });
 
     if (config.no_ready_check) {
       connectToRedis();

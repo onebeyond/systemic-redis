@@ -11,7 +11,7 @@
   "scripts": {
     "lint": "eslint . --ext .js",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npx jest",
+    "test": "npx jest --forceExit",
     "docker:start": "docker-compose up -d",
     "docker:stop": "docker-compose down",
     "release": "commit-and-tag-version"
