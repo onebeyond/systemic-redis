@@ -30,7 +30,7 @@ module.exports = (options) => {
       connectTimeout: 10000,
       keepAlive: 5000,
       reconnectStrategy: retries => {
-        console.log('Reconnect attempt', retries);
+        logger.info('Reconnect attempt', retries);
         return 4000;
       }
     };
