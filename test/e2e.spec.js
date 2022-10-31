@@ -1,3 +1,4 @@
+jest.setTimeout(10000);
 const systemImage = require('./system');
 const redisSystem = require('../index');
 const dockerCompose = require('docker-compose');
@@ -43,7 +44,7 @@ describe('systemic-redis', () => {
       });
     });
 
-    it.only('reconnect strategy', async () => {
+    it('reconnect strategy', async () => {
       system.set('config', { host: 'localhost', port: 6379 });
       system.set('redis', redisSystem()).dependsOn('config');
       const { redis: instance } = await system.start();
