@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [3.0.2](https://github.com/guidesmiths/systemic-redis/compare/v3.0.1...v3.0.2) (2022-10-31)
+
+
+### ☁️ CI
+
+* matrix strategy max parallel one ([55a12ce](https://github.com/guidesmiths/systemic-redis/commit/55a12cefdb126f0aa349c1e8f9c679947223aec7))
+
+
+### 🐛 Bug Fixes
+
+* conencted logger ([a91d23d](https://github.com/guidesmiths/systemic-redis/commit/a91d23d85f04eede04274426b74870c0f5e58fc7))
+* general logger usage ([cfc6c98](https://github.com/guidesmiths/systemic-redis/commit/cfc6c98d75ee68c0c90c5c8640910ccce4eca113))
+* missing reconnect strategy ([df08629](https://github.com/guidesmiths/systemic-redis/commit/df08629df24b86e06e284a5c9c80cf17d7cd4e4a))
+* reconnect attempt use logger ([b3130ec](https://github.com/guidesmiths/systemic-redis/commit/b3130ecff330fef9c3f7777bcf8566f43d6fdf26))
+* refactor wrong error message ([06e008e](https://github.com/guidesmiths/systemic-redis/commit/06e008eeb48b2c773059e10caf0a371ba6262380))
+* replace console info logs ([45481c6](https://github.com/guidesmiths/systemic-redis/commit/45481c6479f407fab000adae8d1cfab3b420df13))
+
 ### [3.0.1](https://github.com/guidesmiths/systemic-redis/compare/v3.0.0...v3.0.1) (2022-09-19)
 
 
