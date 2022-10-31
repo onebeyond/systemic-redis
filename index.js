@@ -29,6 +29,10 @@ module.exports = (options) => {
     const socket = {
       connectTimeout: 10000,
       keepAlive: 5000,
+      reconnectStrategy: retries => {
+        console.log('Reconnect attempt', retries);
+        return 3000;
+      }
     };
     if (config.tls) {
       protocol = 'rediss://';
@@ -36,12 +40,28 @@ module.exports = (options) => {
       socket.servername = host;
     }
     const url = protocol + host + ':' + config.port + '/' + database;
-    logger.info(`Connecting ${url}`);
     client = redis.createClient({
       url,
       password: config.password,
       socket,
     });
+
+    client.on('connect', () => {
+      logger.info(`Try connecting ${url}`);
+    });
+
+    client.on('ready', () => {
+      logger.info(`Connected ${url}`);
+    })
+
+    // Without handling incoming server errors the process would get finished
+    client.on("error", error => {
+      console.error("client err", error);
+    });
+
+    client.on('reconnecting', () => {
+      console.info(`Redis client is reconnecting to ${url}...`)
+    })
 
     if (config.no_ready_check) {
       connectToRedis();
