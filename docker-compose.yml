@@ -4,6 +4,7 @@ services:
   systemic-redis-defaults:
     image: redis:4-alpine3.11
     container_name: systemic-redis-defaults
+    command: redis-server --requirepass systemic-redis-defaults
     ports:
       - 6379:6379
     networks:
