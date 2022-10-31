@@ -30,7 +30,7 @@ module.exports = (options) => {
       connectTimeout: 10000,
       keepAlive: 5000,
       reconnectStrategy: retries => {
-        logger.info('Reconnect attempt', retries);
+        logger.info(`Reconnect attempt ${retries}`);
         return 4000;
       }
     };
@@ -57,11 +57,10 @@ module.exports = (options) => {
 
     // Without handling incoming server errors the process would get finished
     client.on('error', error => {
-      console.log(error.message)
       if (error.message === 'ERR invalid password') {
         throw error;
       }
-      logger.error("client err", error);
+      logger.error(`Client err: ${JSON.stringify(error)}`);
     });
 
     client.on('reconnecting', () => {
