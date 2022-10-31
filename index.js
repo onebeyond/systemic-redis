@@ -56,11 +56,11 @@ module.exports = (options) => {
 
     // Without handling incoming server errors the process would get finished
     client.on("error", error => {
-      console.error("client err", error);
+      logger.error("client err", error);
     });
 
     client.on('reconnecting', () => {
-      console.info(`Redis client is reconnecting to ${url}...`)
+      logger.info(`Redis client is reconnecting to ${url}...`)
     })
 
     if (config.no_ready_check) {
