@@ -21,7 +21,7 @@
     "redis"
   ],
   "author": "GuideSmiths Ltd",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "debug": "^4.3.4",
     "redis": "^4.3.1"
