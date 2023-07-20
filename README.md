@@ -1,3 +1,6 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/097fbf226b80979d8f18/maintainability)](https://codeclimate.com/github/onebeyond/systemic-redis/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/097fbf226b80979d8f18/test_coverage)](https://codeclimate.com/github/onebeyond/systemic-redis/test_coverage)
+
 # systemic-redis
 
 A [systemic](https://github.com/guidesmiths/systemic) redis component
